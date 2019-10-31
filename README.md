@@ -2,7 +2,7 @@
 An improved verson of my previous novel parser. Using dotnet core.
 
 ## BaseNovelSiteParser class
-This abstract class provides some abstract method to parse given online model site, and methods to scrap url from a webpage.
+This abstract class provides some abstract method to parse given online model site, and methods to scrap url/text from a webpage.
 
 ## Wenku8Parser class
 The actual parser to scrap Wenku8 site.
