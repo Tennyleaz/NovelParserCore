@@ -1,0 +1,1 @@
+﻿This project's goal is fixing the text for book "诡境主宰".
