@@ -53,7 +53,7 @@ namespace NovelSiteParser
             throw new NotImplementedException();
         }
 
-        protected override Chapter GetChapterContent(HtmlDocument htmlDoc)
+        protected override Chapter GetChapterContent(HtmlDocument htmlDoc, string chapterUrl)
         {
             if (htmlDoc == null)
                 return null;

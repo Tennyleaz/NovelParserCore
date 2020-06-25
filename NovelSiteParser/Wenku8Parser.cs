@@ -180,7 +180,7 @@ namespace NovelSiteParser
             return bookshelfLinks;
         }
 
-        protected override Chapter GetChapterContent(HtmlDocument htmlDoc)
+        protected override Chapter GetChapterContent(HtmlDocument htmlDoc, string chapterUrl)
         {
             if (htmlDoc == null)
                 return null;

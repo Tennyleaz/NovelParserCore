@@ -16,7 +16,7 @@ namespace NovelParserCore
 
         static async Task Main(string[] args)
         {
-            await Test();
+            //await Test();
             using (BookContext bookContext = new BookContext(sqliteString))
             {
                 bookContext.Database.EnsureCreated();
@@ -31,7 +31,7 @@ namespace NovelParserCore
 
                 string username = File.ReadAllText(@"D:\Test Dir\LoginWebTest\username.txt");
                 string password = File.ReadAllText(@"D:\Test Dir\LoginWebTest\password.txt");
-                Wenku8Parser parser = new Wenku8Parser(username, password, Wenku8Parser.LoginDuration.OneDay);
+                Wenku8Parser2 parser = new Wenku8Parser2(username, password, Wenku8Parser.LoginDuration.OneDay);
                 parser.Init();
                 if (await parser.TryLogin())
                 {

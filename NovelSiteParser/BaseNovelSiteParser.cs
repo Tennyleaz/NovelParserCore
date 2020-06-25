@@ -24,7 +24,7 @@ namespace NovelSiteParser
         #region Abstract functions
         protected abstract Task<BookLink> FindBookIndexPageAsync(HtmlDocument htmlDoc);
         public abstract Task<List<BookshelfLink>> GetBooksFromBookshelf();
-        protected abstract Chapter GetChapterContent(HtmlDocument htmlDoc);
+        protected abstract Chapter GetChapterContent(HtmlDocument htmlDoc, string chapterUrl);
         protected abstract BookLink GetChapterLinks(HtmlDocument htmlDoc, string baseUrl);
         public abstract bool SaveCookie();
         protected abstract CookieContainer LoadCookie();
@@ -102,7 +102,7 @@ namespace NovelSiteParser
                 HtmlDocument bookDocument = new HtmlDocument();
                 bookDocument.LoadHtml(htmlString);
 
-                chapterGot = GetChapterContent(bookDocument);
+                chapterGot = GetChapterContent(bookDocument, chapterLink.Url);
                 chapterLink.Content = chapterGot.Content;
                 if (!string.IsNullOrEmpty(chapterGot.Content))
                     chapterLink.Downloaded = true;  // mark as downloaded
