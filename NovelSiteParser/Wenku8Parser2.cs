@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,18 @@ namespace NovelSiteParser
 
             Chapter tempChapter = base.GetChapterContent(htmlDoc, chapterUrl);
 
-            string url = chapterUrl;
+            var (aidString, vidString) = ParseAidVid(chapterUrl);
+            Chapter chapterGot = GetChapterContent(aidString, vidString);
+            if (chapterGot != null)
+            {
+                chapterGot.Title = tempChapter.Title;  // 標題要用舊方法 parse
+                return chapterGot;
+            }
+            return null;
+        }
+
+        private static (string aid, string vid) ParseAidVid(string url)
+        {
             // https://www.wenku8.net/novel/2/2121/109531.htm
             url = url.Replace("https://www.wenku8.net/novel/", "");
             url = url.Replace(".htm", "");
@@ -36,18 +48,16 @@ namespace NovelSiteParser
             {
                 string aidString = subs[1];
                 string vidString = subs[2];
-                Chapter chapterGot = GetChapterContent(aidString, vidString);
-                if (chapterGot != null)
-                {
-                    chapterGot.Title = tempChapter.Title;  // 標題要用舊方法 parse
-                    return chapterGot;
-                }
+                return (aidString, vidString);
             }
-            return null;
+            Console.WriteLine("Cannot parse aid/vid of url: " + url);
+            return (null, null);
         }
 
         protected Chapter GetChapterContent(string aid, string vid)
         {
+            if (string.IsNullOrEmpty(aid) || string.IsNullOrEmpty(vid))
+                return null;
             try
             {
                 using (WebClient client = new WebClient())
