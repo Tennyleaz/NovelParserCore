@@ -78,5 +78,38 @@ namespace NovelSiteParser
             }
             return null;
         }
+
+        /// <summary>
+        /// 直接下載一冊txt檔案至指定路徑
+        /// </summary>
+        public async Task<bool> DownloadIssueAsync(IssueLink issueLink, string path)
+        {
+            try
+            {
+                if (!path.EndsWith(".txt"))
+                    path += ".txt";
+                string firstChapterUrl = issueLink.ChapterLinks.First().Url;
+                var (aidString, vidString) = ParseAidVid(firstChapterUrl);
+                // vid -1
+                if (int.TryParse(vidString, out int vid))
+                {
+                    vid--;
+                    string download = $"http://dl.wenku8.com/packtxt.php?aid={aidString}&vid={vid}&charset=big5";
+                    Uri uri = new Uri(download);
+                    using (WebClient client = new WebClient())
+                    {
+                        await client.DownloadFileTaskAsync(uri, path);
+                    }
+                    return true;
+                }
+                Console.WriteLine("Cannot parse vid: " + vidString);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return false;
+        }
     }
 }
