@@ -15,6 +15,10 @@ namespace NovelSiteParser
     {
         public string Title;
         public string MainPage;
+        public override string ToString()
+        {
+            return Title;
+        }
     }
 
     /// <summary>
@@ -87,6 +91,11 @@ namespace NovelSiteParser
                 }
             }
         }
+
+        public override string ToString()
+        {
+            return Title;
+        }
     }
 
     /// <summary>
@@ -155,6 +164,11 @@ namespace NovelSiteParser
                 unDownloadedChapters.Add(link);  // 剩下是此冊本地未下載的章捷
             }
             return unDownloadedChapters;
+        }
+
+        public override string ToString()
+        {
+            return Title;
         }
     }
 
